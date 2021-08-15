@@ -1,0 +1,153 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Lumen testing api",
+        "contact": {
+            "name": "Support Team",
+            "email": "support@example.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/articles": {
+            "get": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get list of article",
+                "description": "Returns list of article",
+                "operationId": "11aa4cc6561a7b94c56d1201d62513ee",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Store new article",
+                "description": "Returns article data",
+                "operationId": "e328bed23caf889ad982ad3f1180bccb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArticleStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/articles/search": {
+            "get": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get article information by search query",
+                "description": "Returns article data",
+                "operationId": "58594d90fc0538fb5bb252db2f2df640",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Searching query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/articles/{id}": {
+            "get": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get article information",
+                "description": "Returns article data",
+                "operationId": "21d554678ce2df02b856848909ea1d22",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Article id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Delete existing article",
+                "description": "Deletes a record and returns no content",
+                "operationId": "8d130b13d13fea459109129e549ef3c5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Article id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ArticleStoreRequest": {
+                "title": "Article Store",
+                "description": "Article model",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the new claim",
+                        "type": "String",
+                        "example": "testing"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new claim",
+                        "type": "String",
+                        "example": "testings[oidh asdy pasiugdp gapsiufgapsiudg paisudgpaiusgdp iaugdpaisugd"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Article Store"
+                }
+            }
+        }
+    }
+}
