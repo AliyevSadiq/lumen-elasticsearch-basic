@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentRepository implements ArticleRepository
 {
 
-    public function search(string $query = ''): Collection
+    public function search(string $query = '')
     {
         return Article::query()
             ->where('title', 'like', "%{$query}%")
-            ->get();
+            ->paginate(1000);
     }
 }

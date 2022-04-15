@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+
+  nginx:
+    container_name: testing__nginx
+    build: ./docker/nginx
+    volumes:
+      - .:/app:delegated
+    ports:
+      - 8888:80
+
+  php-fpm:
+    container_name: testing__php-fpm
+    build: ./docker/php-fpm
+    volumes:
+      - .:/app:delegated
+    ports:
+      - 9001:9000
+
+
+  php-cli:
+    container_name: testing__php-cli
+    build: ./docker/php-cli
+    volumes:
+      - .:/app:delegated
+      - composer_cache:/home/appuser/.composer/cache:delegated
+
+  redis:
+    container_name: testing__redis
+    image: redis:latest
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6378:6379
+
+  mysql:
+    container_name: testing__mysql
+    build: ./docker/mysql
+    volumes:
+      - mysql_data:/var/lib/mysql:delegated
+    command: --sql_mode=""
+    environment:
+      MYSQL_USER: testing
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: testing
+      MYSQL_DATABASE: testing_laravel
+      SERVICE_NAME: mysql
+      TZ: Asia/Baku
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3308:3306
+
+  elasticsearch:
+    container_name: testing_elastic_2
+    image: elasticsearch:7.17.2
+    environment:
+      - discovery.type=single-node
+    ports:
+      - '9202:9200'
+    volumes:
+      - ./config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/elasticsearch.yml
+      - esdata:/usr/share/elasticsearch/data
+
+  kibana:
+    container_name: testing_kibana_2
+    image: kibana:7.17.2
+    ports:
+      - '5603:5601'
+
+
+
+volumes:
+  mysql_data:
+  composer_cache:
+  redis_data:
+  esdata:
+    driver: local
